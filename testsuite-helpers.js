@@ -9,11 +9,17 @@ var testSuiteHelpers = (function () {
             padString = padString || "00000000";
             return (padString + strinToPadden).slice(-padString.length);
         },
+        
+        round: function(value, decimals) {
+            return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+        },
 
         repeator: function (functionName, repeatFromZeroTo, stepFactor) {
             var current = 1;
             while (current <= repeatFromZeroTo) {
-                functionName(current);
+                for (var i = 0; i < 10; i++) {
+                    functionName(current);
+                }
                 current *= stepFactor;
             }
         }

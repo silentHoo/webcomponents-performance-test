@@ -24,7 +24,7 @@ var testSuiteShadowRoot = (function () {
 
             testSuiteLogger.addResult(suiteName,
                 1, 'Created ' + times + ' ShadowRoots on one single DIV.');
-
+            
             // cleanup
             document.body.removeChild(div);
         },

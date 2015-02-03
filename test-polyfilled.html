@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<title>Custom Element Registration - PerfTests</title>
+
+<head>
+    <style>
+        h1 {
+            font-size: 18px;
+            color: #204d74;
+        }
+
+        table {
+            width: 100%;
+            text-align: left;
+            font-size: 14px;
+            color: #0b97c4;
+        }
+
+        table tr td {
+            padding: 2px;
+            margin: 0px;
+            border-bottom: 1px grey solid;
+        }
+
+        #support-status {
+            padding: 5px;
+            font-size: 16px;
+            width: 200px;
+            margin-bottom: 10px;
+        }
+
+        .warning {
+            border: 1px #c12e2a solid;
+            color: #c12e2a;
+        }
+
+        .success {
+            border: 1px #4cae4c solid;
+            color: #4cae4c;
+        }
+    </style>
+</head>
+
+<body>
+<h2>Web Components - bleeding edge limits (TestSuites)</h2>
+
+<div id="support-status"></div>
+
+<table id="result-table">
+    <tr>
+        <th>TestSuite</th>
+        <th>#</th>
+        <th>Title</th>
+        <th>Duration</th>
+    </tr>
+    <template id="row-template">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </template>
+</table>
+</body>
+
+<script src="webcomponents.js"></script>
+
+<script src="testsuite-logger.js"></script>
+<script src="testsuite-helpers.js"></script>
+<script src="custom-element-register.js"></script>
+
+<script src="shadow-root.js"></script>
+<script src="shadow-root-complex.js"></script>
+
+<script>
+    'use strict';
+
+    document.addEventListener("DOMContentLoaded", function (event) {
+        var status = document.querySelector('#support-status');
+
+        // checking for Web Components support (credit to: Glen Maddern, geelen on GitHub)
+        if ('registerElement' in document
+                && 'createShadowRoot' in HTMLElement.prototype
+                && 'import' in document.createElement('link')
+                && 'content' in document.createElement('template')) {
+
+            // this browser has full Web Components support
+            status.setAttribute('class', 'success');
+            status.innerHTML = 'Web Components are FULLY supported in this browser!';
+        } else {
+            status.setAttribute('class', 'warning');
+            status.innerHTML = 'Web Components are NOT fully supported in this browser!';
+        }
+        
+        runAllTests();
+
+        function runAllTests() {
+            var repeatFromZeroTo = 1000;
+            var stepFactor = 10;
+
+            testSuiteHelpers.repeator(testSuiteCustomElements.runTestHTMLElementInheritance, repeatFromZeroTo, stepFactor);
+            testSuiteLogger.addResult('---', '---', '---');
+            testSuiteHelpers.repeator(testSuiteCustomElements.runTestWithoutInteritance, repeatFromZeroTo, stepFactor);
+            testSuiteLogger.addResult('---', '---', '---');
+            testSuiteHelpers.repeator(testSuiteCustomElements.runTestHTMLButtonElementInheritance, repeatFromZeroTo, stepFactor);
+            testSuiteLogger.addResult('---', '---', '---');
+            testSuiteHelpers.repeator(testSuiteCustomElements.runTestHTMLAudioElementInheritance, repeatFromZeroTo, stepFactor);
+            testSuiteLogger.addResult('---', '---', '---');
+
+            testSuiteHelpers.repeator(testSuiteShadowRoot.runTestWithoutAnyShadowContent, repeatFromZeroTo, stepFactor);
+            testSuiteLogger.addResult('---', '---', '---');
+            testSuiteHelpers.repeator(testSuiteShadowRoot.runTestWithShadowContent, repeatFromZeroTo, stepFactor);
+            testSuiteLogger.addResult('---', '---', '---');
+            testSuiteHelpers.repeator(testSuiteShadowRoot.runTestWithShadowContentAndShadowInsertions, repeatFromZeroTo, stepFactor);
+            testSuiteLogger.addResult('---', '---', '---');
+
+            testSuiteHelpers.repeator(testSuiteShadowRootComplex.runTestNestedShadowRoots, repeatFromZeroTo, stepFactor);
+            testSuiteLogger.addResult('---', '---', '---');
+        }
+    });
+</script>
+</html>

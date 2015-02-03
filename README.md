@@ -1,4 +1,5 @@
 webcomponents-performance-test
 ==============================
 
-This is a work in progress performance test suite.
+1) Native (without Polyfills): https://silenthoo.github.io/webcomponents-performance-test/test-native.html
+2) Polyfilled: https://silenthoo.github.io/webcomponents-performance-test/test-polyfilled.html

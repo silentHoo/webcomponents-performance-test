@@ -5,7 +5,7 @@
   "authors": [
     "Patrick Hillert"
   ],
-  "description": "A performance test suite for native web components.",
+  "description": "A performance test suite for native web components that test the maximum bleeding edge possibilities.",
   "main": "test.html",
   "keywords": [
     "webcomponents",

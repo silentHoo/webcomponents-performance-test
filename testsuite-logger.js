@@ -22,6 +22,7 @@ var testSuiteLogger = (function () {
             clone.querySelector('td:nth-child(2)').innerHTML = testNumber;
             clone.querySelector('td:nth-child(3)').innerHTML = title;
             clone.querySelector('td:nth-child(4)').innerHTML = (testSuite == '---') ? '---' : getDuration() + "s";
+
             table.appendChild(clone);
         }
     }

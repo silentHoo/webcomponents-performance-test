@@ -64,6 +64,8 @@
 </table>
 </body>
 
+<!--<script src="webcomponents.js"></script>-->
+
 <script src="testsuite-logger.js"></script>
 <script src="testsuite-helpers.js"></script>
 <script src="custom-element-register.js"></script>
@@ -85,15 +87,16 @@
 
             // this browser has full Web Components support
             status.setAttribute('class', 'success');
-            status.innerHTML = 'Web Components are fully supported in this browser!';
-            runAllTests();
+            status.innerHTML = 'Web Components are FULLY supported in this browser!';
         } else {
             status.setAttribute('class', 'warning');
             status.innerHTML = 'Web Components are NOT fully supported in this browser!';
         }
+        
+        runAllTests();
 
         function runAllTests() {
-            var repeatFromZeroTo = 10000;
+            var repeatFromZeroTo = 1000;
             var stepFactor = 10;
 
             testSuiteHelpers.repeator(testSuiteCustomElements.runTestHTMLElementInheritance, repeatFromZeroTo, stepFactor);
@@ -103,6 +106,7 @@
             testSuiteHelpers.repeator(testSuiteCustomElements.runTestHTMLButtonElementInheritance, repeatFromZeroTo, stepFactor);
             testSuiteLogger.addResult('---', '---', '---');
             testSuiteHelpers.repeator(testSuiteCustomElements.runTestHTMLAudioElementInheritance, repeatFromZeroTo, stepFactor);
+            testSuiteLogger.addResult('---', '---', '---');
 
             testSuiteHelpers.repeator(testSuiteShadowRoot.runTestWithoutAnyShadowContent, repeatFromZeroTo, stepFactor);
             testSuiteLogger.addResult('---', '---', '---');

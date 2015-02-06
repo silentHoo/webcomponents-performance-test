@@ -29,6 +29,10 @@ var testSuiteLogger = (function () {
         var table = document.querySelector('#result-table');
 
         // don't use innerHTML, it's read-only!
+        console.log(clone);
+        console.log(clone.querySelector('td'));
+        console.log(clone.querySelector('td:nth-child(1)'));
+       
         clone.querySelector('td:nth-child(1)').innerText = testSuite;
         clone.querySelector('td:nth-child(2)').innerText = testNumber;
         clone.querySelector('td:nth-child(3)').innerText = title;

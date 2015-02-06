@@ -24,7 +24,7 @@ var testSuiteLogger = (function () {
     
     var addResultLine = function(testSuite, testNumber, title, duration) {
         var template = document.querySelector('#row-template');
-        var clone = document.importNode(template.content, true);
+        //var clone = document.importNode(template.content, true);
         var table = document.querySelector('#result-table');
 
         // don't use innerHTML, it's read-only!
@@ -36,7 +36,7 @@ var testSuiteLogger = (function () {
         table.appendChild(clone);
         */
         
-        table.appendChild('<tr>' +
+        table.innerHTML += ('<tr>' +
             '<td>' + testSuite + '</td>' +
             '<td>' + testNumber + '</td>' +
             '<td>' + title + '</td>' +

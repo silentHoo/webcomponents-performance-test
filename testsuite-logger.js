@@ -25,6 +25,7 @@ var testSuiteLogger = (function () {
     
     var addResultLine = function(testSuite, testNumber, title, duration) {
         var template = document.querySelector('#row-template');
+        console.log(template);
         var clone = document.importNode(template.content, true);
         var table = document.querySelector('#result-table');
 

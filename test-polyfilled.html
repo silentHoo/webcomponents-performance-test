@@ -21,6 +21,10 @@
             margin: 0px;
             border-bottom: 1px grey solid;
         }
+        
+        #config tr td {
+            border-bottom: 0px !important;
+        }
 
         #support-status {
             padding: 5px;
@@ -45,6 +49,20 @@
 <h2>Web Components - bleeding edge limits (TestSuites with 100 rounds per testcase)</h2>
 
 <div id="support-status"></div>
+
+<table id="config">
+<tr>
+    <td>Step factor:</td> <td><input type="text" value="10" id="stepFactor"></td>
+<tr>
+<tr>
+    <td>Repetitions count for each test:</td> <td><input type="text" value="1000" id="repetitionCount"></td>
+</tr>
+<tr>
+    <td colspan="2" style="text-align: left;"><input type="button" value="START THE TEST" onclick="runAllTests()"> Status: <span id="status">waiting</span></td>
+</tr>
+</table>
+
+<br><br>
 
 <table id="result-table">
     <tr>
@@ -75,6 +93,10 @@
 
 <script>
     'use strict';
+    
+    var tableEmpty;
+    var table = document.querySelector('#result-table');
+    var statusText = document.getElementById('status');
 
     document.addEventListener("DOMContentLoaded", function (event) {
         var status = document.querySelector('#support-status');
@@ -93,31 +115,46 @@
             status.innerHTML = 'Web Components are NOT fully supported in this browser!';
         }
         
-        runAllTests();
-
-        function runAllTests() {
-            var repeatFromZeroTo = 1000;
-            var stepFactor = 10;
-
-            testSuiteHelpers.repeator(testSuiteCustomElements.runTestHTMLElementInheritance, repeatFromZeroTo, stepFactor);
-            testSuiteLogger.addResult('---', '---', '---');
-            testSuiteHelpers.repeator(testSuiteCustomElements.runTestWithoutInteritance, repeatFromZeroTo, stepFactor);
-            testSuiteLogger.addResult('---', '---', '---');
-            testSuiteHelpers.repeator(testSuiteCustomElements.runTestHTMLButtonElementInheritance, repeatFromZeroTo, stepFactor);
-            testSuiteLogger.addResult('---', '---', '---');
-            testSuiteHelpers.repeator(testSuiteCustomElements.runTestHTMLAudioElementInheritance, repeatFromZeroTo, stepFactor);
-            testSuiteLogger.addResult('---', '---', '---');
-
-            testSuiteHelpers.repeator(testSuiteShadowRoot.runTestWithoutAnyShadowContent, repeatFromZeroTo, stepFactor);
-            testSuiteLogger.addResult('---', '---', '---');
-            testSuiteHelpers.repeator(testSuiteShadowRoot.runTestWithShadowContent, repeatFromZeroTo, stepFactor);
-            testSuiteLogger.addResult('---', '---', '---');
-            testSuiteHelpers.repeator(testSuiteShadowRoot.runTestWithShadowContentAndShadowInsertions, repeatFromZeroTo, stepFactor);
-            testSuiteLogger.addResult('---', '---', '---');
-
-            testSuiteHelpers.repeator(testSuiteShadowRootComplex.runTestNestedShadowRoots, repeatFromZeroTo, stepFactor);
-            testSuiteLogger.addResult('---', '---', '---');
-        }
+        tableEmpty = table.cloneNode(true);
     });
+    
+    function runAllTests() {
+        var rc = +document.querySelector('#repetitionCount').value;
+        var sf = +document.querySelector('#stepFactor').value;
+        
+        if (rc <= 0 || sf <= 0) {
+            statusText.innerHTML = 'Please enter a number greater than zero for both values.';
+            return;
+        }
+        
+        statusText.innerHTML = 'Test is running.'
+        
+        table.innerHTML = '';
+        table.appendChild(tableEmpty);
+        
+        var repeatFromZeroTo = rc;
+        var stepFactor = sf;
+
+        testSuiteHelpers.repeator(testSuiteCustomElements.runTestHTMLElementInheritance, repeatFromZeroTo, stepFactor);
+        testSuiteLogger.addResult('---', '---', '---');
+        testSuiteHelpers.repeator(testSuiteCustomElements.runTestWithoutInteritance, repeatFromZeroTo, stepFactor);
+        testSuiteLogger.addResult('---', '---', '---');
+        testSuiteHelpers.repeator(testSuiteCustomElements.runTestHTMLButtonElementInheritance, repeatFromZeroTo, stepFactor);
+        testSuiteLogger.addResult('---', '---', '---');
+        testSuiteHelpers.repeator(testSuiteCustomElements.runTestHTMLAudioElementInheritance, repeatFromZeroTo, stepFactor);
+        testSuiteLogger.addResult('---', '---', '---');
+
+        testSuiteHelpers.repeator(testSuiteShadowRoot.runTestWithoutAnyShadowContent, repeatFromZeroTo, stepFactor);
+        testSuiteLogger.addResult('---', '---', '---');
+        testSuiteHelpers.repeator(testSuiteShadowRoot.runTestWithShadowContent, repeatFromZeroTo, stepFactor);
+        testSuiteLogger.addResult('---', '---', '---');
+        testSuiteHelpers.repeator(testSuiteShadowRoot.runTestWithShadowContentAndShadowInsertions, repeatFromZeroTo, stepFactor);
+        testSuiteLogger.addResult('---', '---', '---');
+
+        testSuiteHelpers.repeator(testSuiteShadowRootComplex.runTestNestedShadowRoots, repeatFromZeroTo, stepFactor);
+        testSuiteLogger.addResult('---', '---', '---');
+        
+        statusText.innerHTML = 'Test is done.';
+    }
 </script>
 </html>

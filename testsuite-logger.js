@@ -29,10 +29,11 @@ var testSuiteLogger = (function () {
         var clone = document.importNode(template.content, true);
         var table = document.querySelector('#result-table');
 
-        clone.querySelector('td:nth-child(1)').innerHTML = testSuite;
-        clone.querySelector('td:nth-child(2)').innerHTML = testNumber;
-        clone.querySelector('td:nth-child(3)').innerHTML = title;
-        clone.querySelector('td:nth-child(4)').innerHTML = (testSuite == '---') ? '---' : testSuiteHelpers.round(duration, 2) + "ms";
+        // don't use innerHTML, it's read-only!
+        clone.querySelector('td:nth-child(1)').innerText = testSuite;
+        clone.querySelector('td:nth-child(2)').innerText = testNumber;
+        clone.querySelector('td:nth-child(3)').innerText = title;
+        clone.querySelector('td:nth-child(4)').innerText = (testSuite == '---') ? '---' : getDuration() + "s";
 
         table.appendChild(clone);
     };

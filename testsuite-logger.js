@@ -37,12 +37,12 @@ var testSuiteLogger = (function () {
         table.appendChild(clone);
         */
         
-        table.appendChild('<tr>
-            <td>' + testSuite + '</td>
-            <td>' + testNumber + '</td>
-            <td>' + title + '</td>
-            <td>' + (testSuite == '---') ? '---' : getDuration() + 's' + '</td>
-        </tr>');
+        table.appendChild('<tr>' +
+            '<td>' + testSuite + '</td>' +
+            '<td>' + testNumber + '</td>' +
+            '<td>' + title + '</td>' +
+            '<td>' + (testSuite == '---') ? '---' : getDuration() + 's' + '</td>' +
+        '</tr>');
     };
 
     // public

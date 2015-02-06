@@ -25,21 +25,24 @@ var testSuiteLogger = (function () {
     
     var addResultLine = function(testSuite, testNumber, title, duration) {
         var template = document.querySelector('#row-template');
-        console.log(template);
         var clone = document.importNode(template.content, true);
         var table = document.querySelector('#result-table');
 
         // don't use innerHTML, it's read-only!
-        console.log(clone);
-        console.log(clone.querySelectorAll('td'));
-        console.log(clone.querySelector('td:nth-child(1)'));
-       
-        clone.querySelector('td:nth-child(1)').innerText = testSuite;
+        /*clone.querySelector('td:nth-child(1)').innerText = testSuite;
         clone.querySelector('td:nth-child(2)').innerText = testNumber;
         clone.querySelector('td:nth-child(3)').innerText = title;
         clone.querySelector('td:nth-child(4)').innerText = (testSuite == '---') ? '---' : getDuration() + "s";
 
         table.appendChild(clone);
+        */
+        
+        table.appendChild('<tr>
+            <td>' + testSuite + '</td>
+            <td>' + testNumber + '</td>
+            <td>' + title + '</td>
+            <td>' + (testSuite == '---') ? '---' : getDuration() + 's' + '</td>
+        </tr>');
     };
 
     // public

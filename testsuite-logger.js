@@ -43,7 +43,7 @@ var testSuiteLogger = (function () {
                         '<td>' + (testSuite == '---') ? '---' : getDuration() + 's' + '</td>';
         table.appendChild(row);*/
         
-        console.log(testSuite + ' \t\t ' + testNumber + '\t\t' + title + '\t\t' + (testSuite == '---') ? '---' : getDuration() + 's');
+        console.log(testSuite);
     };
 
     // public

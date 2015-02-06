@@ -82,7 +82,7 @@
         // checking for Web Components support (credit to: Glen Maddern, geelen on GitHub)
         document.querySelector('#ce').innerHTML = 'registerElement' in document ? 'Yes' : 'No';
         document.querySelector('#sd').innerHTML = 'createShadowRoot' in HTMLElement.prototype ? 'Yes' : 'No';
-        document.querySelector('#hi').innerHTML = 'import' in document.createElement('link') in document ? 'Yes' : 'No';
+        document.querySelector('#hi').innerHTML = 'import' in document.createElement('link') ? 'Yes' : 'No';
         document.querySelector('#tl').innerHTML = 'content' in document.createElement('template') ? 'Yes' : 'No';
     });
 </script>

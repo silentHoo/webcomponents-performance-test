@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<title>webcomponents.js Test</title>
+
+<head>
+    <style>
+        h1 {
+            font-size: 18px;
+            color: #204d74;
+        }
+
+        table {
+            width: 100%;
+            text-align: left;
+            font-size: 14px;
+            color: #0b97c4;
+        }
+
+        table tr td {
+            padding: 2px;
+            margin: 0px;
+            border-bottom: 1px grey solid;
+        }
+
+        #support-status {
+            padding: 5px;
+            font-size: 16px;
+            width: 200px;
+            margin-bottom: 10px;
+        }
+
+        .warning {
+            border: 1px #c12e2a solid;
+            color: #c12e2a;
+        }
+
+        .success {
+            border: 1px #4cae4c solid;
+            color: #4cae4c;
+        }
+    </style>
+</head>
+
+<body>
+<h2>Web Components - This page should not throw any console errors</h2>
+
+<p>This page includes only webcomponents.js, if it throws some errors, there's a bug.</p>
+
+<div>
+    <table>
+        <tr>
+            <th>Polyfill</th>
+            <th>Supported? (At least partial!)</th>
+        </tr>
+        <tr>
+            <td>Custom Elements</td>
+            <td id="ce"></td>
+        </tr>
+        <tr>
+            <td>Shadow DOM</td>
+            <td id="sd"></td>
+        </tr>
+        <tr>
+            <td>HTML Import</td>
+            <td id="hi"></td>
+        </tr>
+        <tr>
+            <td>Template</td>
+            <td id="tl"></td>
+        </tr>
+    </table>
+</div>
+
+</body>
+
+<script src="webcomponents_0.5.4.js"></script>
+
+<script>
+    'use strict';
+
+    document.addEventListener("DOMContentLoaded", function (event) {
+        // checking for Web Components support (credit to: Glen Maddern, geelen on GitHub)
+        document.querySelector('#ce').innerHTML = 'registerElement' in document ? 'Yes' : 'No';
+        document.querySelector('#sd').innerHTML = 'createShadowRoot' in HTMLElement.prototype ? 'Yes' : 'No';
+        document.querySelector('#hi').innerHTML = 'import' in document.createElement('link') in document ? 'Yes' : 'No';
+        document.querySelector('#tl').innerHTML = 'content' in document.createElement('template') ? 'Yes' : 'No';
+    });
+</script>
+</html>

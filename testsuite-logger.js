@@ -35,15 +35,17 @@ var testSuiteLogger = (function () {
 
         table.appendChild(clone);
         */
-        /*
+        
+        var dur = (testSuite == '---') ? '---' : getDuration() + 's';
+
         var row = document.createElement('tr');
         row.innerHTML = '<td>' + testSuite + '</td>' +
                         '<td>' + testNumber + '</td>' +
                         '<td>' + title + '</td>' +
-                        '<td>' + (testSuite == '---') ? '---' : getDuration() + 's' + '</td>';
-        table.appendChild(row);*/
+                        '<td>' + dur + '</td>';
+        table.appendChild(row);
         
-        console.log(testSuite + ' - '); // + '\t\t' + title + '\t\t' + (testSuite == '---') ? '---' : getDuration() + 's');
+        //console.log(testSuite + ' - '); // + '\t\t' + title + '\t\t' + (testSuite == '---') ? '---' : getDuration() + 's');
     };
 
     // public

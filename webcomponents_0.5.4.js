@@ -2503,7 +2503,7 @@ if (WebComponents.flags.shadow) {
        case '"':
         return "&quot;";
 
-       case " ":
+       case " ":
         return "&nbsp;";
       }
     }

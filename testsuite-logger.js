@@ -36,12 +36,12 @@ var testSuiteLogger = (function () {
         table.appendChild(clone);
         */
         
-        table.innerHTML += ('<tr>' +
-            '<td>' + testSuite + '</td>' +
-            '<td>' + testNumber + '</td>' +
-            '<td>' + title + '</td>' +
-            '<td>' + (testSuite == '---') ? '---' : getDuration() + 's' + '</td>' +
-        '</tr>');
+        var row = document.createElement('tr');
+        row.innerHTML = '<td>' + testSuite + '</td>' +
+                        '<td>' + testNumber + '</td>' +
+                        '<td>' + title + '</td>' +
+                        '<td>' + (testSuite == '---') ? '---' : getDuration() + 's' + '</td>';
+        table.appendChild(row);
     };
 
     // public

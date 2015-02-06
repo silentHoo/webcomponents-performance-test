@@ -31,7 +31,7 @@ var testSuiteLogger = (function () {
 
         // don't use innerHTML, it's read-only!
         console.log(clone);
-        console.log(clone.querySelector('td'));
+        console.log(clone.querySelectorAll('td'));
         console.log(clone.querySelector('td:nth-child(1)'));
        
         clone.querySelector('td:nth-child(1)').innerText = testSuite;

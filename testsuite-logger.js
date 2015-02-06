@@ -28,13 +28,13 @@ var testSuiteLogger = (function () {
         var table = document.querySelector('#result-table');
 
         // don't use innerHTML, it's read-only!
-        clone.querySelector('td:nth-child(1)').innerText = testSuite;
+/*        clone.querySelector('td:nth-child(1)').innerText = testSuite;
         clone.querySelector('td:nth-child(2)').innerText = testNumber;
         clone.querySelector('td:nth-child(3)').innerText = title;
         clone.querySelector('td:nth-child(4)').innerText = (testSuite == '---') ? '---' : getDuration() + "s";
 
         table.appendChild(clone);
-        
+        */
         /*
         var row = document.createElement('tr');
         row.innerHTML = '<td>' + testSuite + '</td>' +
@@ -42,6 +42,8 @@ var testSuiteLogger = (function () {
                         '<td>' + title + '</td>' +
                         '<td>' + (testSuite == '---') ? '---' : getDuration() + 's' + '</td>';
         table.appendChild(row);*/
+        
+        console.log(testSuite + ' \t\t ' + testNumber + '\t\t' + title + '\t\t' + (testSuite == '---') ? '---' : getDuration() + 's');
     };
 
     // public

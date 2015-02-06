@@ -24,24 +24,24 @@ var testSuiteLogger = (function () {
     
     var addResultLine = function(testSuite, testNumber, title, duration) {
         var template = document.querySelector('#row-template');
-        //var clone = document.importNode(template.content, true);
+        var clone = document.importNode(template.content, true);
         var table = document.querySelector('#result-table');
 
         // don't use innerHTML, it's read-only!
-        /*clone.querySelector('td:nth-child(1)').innerText = testSuite;
+        clone.querySelector('td:nth-child(1)').innerText = testSuite;
         clone.querySelector('td:nth-child(2)').innerText = testNumber;
         clone.querySelector('td:nth-child(3)').innerText = title;
         clone.querySelector('td:nth-child(4)').innerText = (testSuite == '---') ? '---' : getDuration() + "s";
 
         table.appendChild(clone);
-        */
         
+        /*
         var row = document.createElement('tr');
         row.innerHTML = '<td>' + testSuite + '</td>' +
                         '<td>' + testNumber + '</td>' +
                         '<td>' + title + '</td>' +
                         '<td>' + (testSuite == '---') ? '---' : getDuration() + 's' + '</td>';
-        table.appendChild(row);
+        table.appendChild(row);*/
     };
 
     // public

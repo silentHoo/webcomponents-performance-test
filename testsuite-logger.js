@@ -36,7 +36,7 @@ var testSuiteLogger = (function () {
         table.appendChild(clone);
         */
         
-        var dur = (testSuite == '---') ? '---' : getDuration() + 's';
+        var dur = (testSuite == '---') ? '---' : getDuration() + 'ms';
 
         var row = document.createElement('tr');
         row.innerHTML = '<td>' + testSuite + '</td>' +

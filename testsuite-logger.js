@@ -1,4 +1,3 @@
-'use strict';
 
 var testSuiteLogger = (function () {
     // private

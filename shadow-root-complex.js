@@ -28,16 +28,18 @@ var testSuiteShadowRootComplex = (function () {
     // public
     return {
         runTestNestedShadowRoots: function (times) {
-            document.body.appendChild(document.createElement('div'));
-
+            // prepare
+            var id = 'id-' + Date.now();
+            var div = document.createElement('div');
+            div.id = id;
+            document.body.appendChild(div);
+            
             testSuiteLogger.initStartTime();
-
-            var div = document.querySelector('div');
+            
             var shadowRoot = div.createShadowRoot();
             addShadowsIterative(shadowRoot, times - 1, 'div');
 
-            testSuiteLogger.addResult(suiteName,
-                1, 'Created ' + times + ' ' + testDescr[0]);
+            testSuiteLogger.addResult(suiteName, 1, 'Created ' + times + ' ' + testDescr[0]);
 
             // cleanup
             document.body.removeChild(div);

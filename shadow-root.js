@@ -17,12 +17,14 @@ var testSuiteShadowRoot = (function () {
     // public
     return {
         runTestWithoutAnyShadowContent: function (times) {
-            // setup: create one div to attach into the DOM, to attach the Shadow Roots there
-            document.body.appendChild(document.createElement('div'));
+            // prepare
+            var id = 'id-' + Date.now();
+            var div = document.createElement('div');
+            div.id = id;
+            document.body.appendChild(div);
 
             testSuiteLogger.initStartTime();
 
-            var div = document.querySelector('div');
             for (var i = 0; i < times; ++i) {
                 div.createShadowRoot();
             }
@@ -35,12 +37,14 @@ var testSuiteShadowRoot = (function () {
 
         // x times ShadowDOM + div container for each shadow dom
         runTestWithShadowContent: function (times) {
-            // setup: create one div to attach into the DOM, to attach the Shadow Roots there
-            document.body.appendChild(document.createElement('div'));
+            // prepare
+            var id = 'id-' + Date.now();
+            var div = document.createElement('div');
+            div.id = id;
+            document.body.appendChild(div);
 
             testSuiteLogger.initStartTime();
 
-            var div = document.querySelector('div');
             for (var i = 0; i < times; ++i) {
                 var root = div.createShadowRoot();
                 root.innerHTML = '<div style="position: absolute; top:10px; width:20px; height:20px; background-color:red;"></div>';
@@ -53,12 +57,14 @@ var testSuiteShadowRoot = (function () {
         },
 
         runTestWithShadowContentAndShadowInsertions: function (times) {
-            // setup: create one div to attach into the DOM, to attach the Shadow Roots there
-            document.body.appendChild(document.createElement('div'));
+            // prepare
+            var id = 'id-' + Date.now();
+            var div = document.createElement('div');
+            div.id = id;
+            document.body.appendChild(div);
 
             testSuiteLogger.initStartTime();
 
-            var div = document.querySelector('div');
             for (var i = 0; i < times; ++i) {
                 var root = div.createShadowRoot();
                 root.innerHTML = '<div style="position: absolute; top:10px; width:20px; height:20px; background-color:red;"><shadow></shadow></div>';

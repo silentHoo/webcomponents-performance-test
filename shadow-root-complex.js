@@ -2,7 +2,10 @@
 
 var testSuiteShadowRootComplex = (function () {
     // private
-    var suiteName = "ShadowRootComplex";
+    var suiteName = 'ShadowRootComplex';
+    var testDescr = [
+        'ShadowRoots deep in a row - ShadowRoot child on ShadowRoot child.'
+    ];
     var countTestRuns = 0;
 
     var buildSuffix = function (round) {
@@ -34,10 +37,24 @@ var testSuiteShadowRootComplex = (function () {
             addShadowsIterative(shadowRoot, times - 1, 'div');
 
             testSuiteLogger.addResult(suiteName,
-                1, 'Created ' + times + ' ShadowRoots deep in a row - ShadowRoot child on ShadowRoot child.');
+                1, 'Created ' + times + ' ' + testDescr[0]);
 
             // cleanup
             document.body.removeChild(div);
+        },
+        
+        getSuiteName: function() {
+            return suiteName;
+        },
+        
+        getTestDescr: function() {
+            return testDescr;
+        },
+        
+        getTestFunctions: function() {
+            return [
+                this.runTestNestedShadowRoots
+            ];
         }
     }
 }());

@@ -2,7 +2,10 @@
 
 var testSuiteNoComponents = (function () {
     // private
-    var suiteName = "NoComponents";
+    var suiteName = 'NoComponents';
+    var testDescr = [
+        'Elements deep in a row - Element child on Element child.'
+    ];
     var countTestRuns = 0;
 
     var buildSuffix = function (round) {
@@ -23,18 +26,32 @@ var testSuiteNoComponents = (function () {
     // public
     return {
         runTestNestedElements: function (times) {
-            document.body.appendChild(document.createElement('div'));
+            // prepare
+            var id = 'id-' + Date.now();
+            var div = document.createElement('div');
+            div.id = id;
+            document.body.appendChild(div);
 
             testSuiteLogger.initStartTime();
-
-            var div = document.querySelector('div');
             addElementsIterative(div, times - 1);
-
-            testSuiteLogger.addResult(suiteName,
-                1, 'Created ' + times + ' Elements deep in a row - Element child on Element child.');
+            testSuiteLogger.addResult(suiteName, 1, 'Created ' + times + ' ' + testDescr[0]);
 
             // cleanup
             document.body.removeChild(div);
+        },
+        
+        getSuiteName: function() {
+            return suiteName;
+        },
+        
+        getTestDescr: function() {
+            return testDescr;
+        },
+        
+        getTestFunctions: function() {
+            return [
+                this.runTestNestedElements
+            ];
         }
     }
 }());

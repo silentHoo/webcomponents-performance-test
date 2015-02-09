@@ -1,5 +1,4 @@
 webcomponents-performance-test
 ==============================
 
-1) Native (without Polyfills): https://silenthoo.github.io/webcomponents-performance-test/test-native.html
-2) Polyfilled: https://silenthoo.github.io/webcomponents-performance-test/test-polyfilled.html
+The source is in the `gh-pages` branch. See the tests in action live in your browser https://silenthoo.github.io/webcomponents-performance-test/test.html

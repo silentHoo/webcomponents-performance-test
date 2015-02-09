@@ -1,6 +1,6 @@
 'use strict';
 
-var testSuiteShadowRootComplex = (function () {
+var testSuiteNoComponents = (function () {
     // private
     var suiteName = "NoComponents";
     var countTestRuns = 0;

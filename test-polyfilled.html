@@ -239,6 +239,11 @@
             testSuiteLogger.addResult('---', '---', '---');
         }
         
+        if (document.querySelector('#no1').checked) {
+            testSuiteHelpers.repeator(testSuiteNoComponents.runTestNestedElements, repeatFromZeroTo, stepFactor, repetitionCount);
+            testSuiteLogger.addResult('---', '---', '---');
+        }
+        
         statusText.innerHTML = 'Test is done.';
     }
 </script>

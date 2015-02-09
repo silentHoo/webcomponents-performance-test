@@ -22,14 +22,18 @@
             border-bottom: 1px grey solid;
         }
         
+        #result-table td:first-child {
+            text-align: right;
+        }
+        
         #config tr td {
             border-bottom: 0px !important;
         }
 
-        #support-status {
+        #support-status,
+        #polyfill-status {
             padding: 5px;
             font-size: 16px;
-            width: 200px;
             margin-bottom: 10px;
         }
 
@@ -42,20 +46,57 @@
             border: 1px #4cae4c solid;
             color: #4cae4c;
         }
+        
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
 <body>
-<h2>Web Components - bleeding edge limits (TestSuites with 100 rounds per testcase)</h2>
+<h2>Web Components - bleeding edge limits configurator</h2>
 
+<div id="polyfill-status">
+    <span id="polyfill-enabled-status"></span>
+    <div>Switch between: <a href="?polyfilled">polyfilled</a> and <a href="?">not polyfilled</a> version.</div>
+</div>
 <div id="support-status"></div>
 
 <table id="config">
 <tr>
+    <td>Repeat from zero to:</td> <td><input type="text" value="10000" id="repeatFromZeroTo"></td>
+<tr>
+<tr>
     <td>Step factor:</td> <td><input type="text" value="10" id="stepFactor"></td>
 <tr>
 <tr>
-    <td>Repetitions count for each test:</td> <td><input type="text" value="1000" id="repetitionCount"></td>
+    <td>Repetitions count for each test:</td> <td><input type="text" value="100" id="repetitionCount"></td>
+</tr>
+<tr>
+    <td colspan="2"></td>
+</tr>
+<tr>
+    <td colspan="2">Test Cases:</td>
+</tr>
+<tr>
+    <td colspan="2">
+        <fieldset>
+        <legend>Test Cases</legend>
+            <input type="checkbox" checked id="ce1">Custom Element #1: Registering Custom Elements with HTMLElement prototype.<br>
+            <input type="checkbox" checked id="ce2">Custom Element #2: Registering Custom Elements with no prototype.<br>
+            <input type="checkbox" checked id="ce3">Custom Element #3: Registering Custom Elements with HTMLButtonElement prototype.<br>
+            <input type="checkbox" checked id="ce4">Custom Element #4: Registering Custom Elements with HTMLAudioElement prototype.<br>
+            <input type="checkbox" checked id="sr1">Shadow Root #1: ShadowRoots on one single DIV.<br>
+            <input type="checkbox" checked id="sr2">Shadow Root #2: ShadowRoots on one single DIV with another, boxed+colored DIV in it (only last DIV will render!).<br>
+            <input type="checkbox" checked id="sr3">Shadow Root #3: ShadowRoots on one single DIV with another, boxed+colored DIV in it (only last DIV will render!) which used SHADOW elements to get content of previous attached Shadow Root.<br>
+            <input type="checkbox" checked id="src1">Shadow Root Complex #1: ShadowRoots deep in a row - ShadowRoot child on ShadowRoot child.
+    </fieldset>
+    </td>
 </tr>
 <tr>
     <td colspan="2" style="text-align: left;"><input type="button" value="START THE TEST" onclick="runAllTests()"> Status: <span id="status">waiting</span></td>
@@ -82,12 +123,12 @@
 </table>
 </body>
 
-<script src="webcomponents_0.5.4.js"></script>
-
+<!-- test suite helper -->
 <script src="testsuite-logger.js"></script>
 <script src="testsuite-helpers.js"></script>
-<script src="custom-element-register.js"></script>
 
+<!-- test suites -->
+<script src="custom-element-register.js"></script>
 <script src="shadow-root.js"></script>
 <script src="shadow-root-complex.js"></script>
 
@@ -99,6 +140,28 @@
     var statusText = document.getElementById('status');
 
     document.addEventListener("DOMContentLoaded", function (event) {
+        var statusEnabledEl = document.querySelector('#polyfill-enabled-status');
+        var statusEl = document.querySelector('#polyfill-status');
+        if (location.search.indexOf("polyfilled") != -1) {
+            var script = document.createElement("script");
+            script.src = "webcomponents_0.5.4.js";
+            document.head.appendChild(script);
+            
+            //script.onload = browserCheck;
+            
+            statusEnabledEl.innerHTML = 'You are using polyfills for the tests.';
+            statusEl.classList.add('success');
+        } else {
+            statusEnabledEl.innerHTML = 'You are NOT using polyfills for the tests.';
+            statusEl.classList.add('warning');
+            
+            //browserCheck();
+        }
+        
+        tableEmpty = table.cloneNode(true);
+    });
+    
+    function browserCheck() {
         var status = document.querySelector('#support-status');
 
         // checking for Web Components support (credit to: Glen Maddern, geelen on GitHub)
@@ -114,15 +177,14 @@
             status.setAttribute('class', 'warning');
             status.innerHTML = 'Web Components are NOT fully supported in this browser!';
         }
-        
-        tableEmpty = table.cloneNode(true);
-    });
+    }
     
     function runAllTests() {
+        var zt = +document.querySelector('#repeatFromZeroTo').value;
         var rc = +document.querySelector('#repetitionCount').value;
         var sf = +document.querySelector('#stepFactor').value;
         
-        if (rc <= 0 || sf <= 0) {
+        if (rc <= 0 || sf <= 0 || zt <= 0) {
             statusText.innerHTML = 'Please enter a number greater than zero for both values.';
             return;
         }
@@ -132,27 +194,49 @@
         table.innerHTML = '';
         table.appendChild(tableEmpty);
         
-        var repeatFromZeroTo = rc;
+        var repeatFromZeroTo = zt;
         var stepFactor = sf;
+        var repetitionCount = rc;
 
-        testSuiteHelpers.repeator(testSuiteCustomElements.runTestHTMLElementInheritance, repeatFromZeroTo, stepFactor);
-        testSuiteLogger.addResult('---', '---', '---');
-        testSuiteHelpers.repeator(testSuiteCustomElements.runTestWithoutInteritance, repeatFromZeroTo, stepFactor);
-        testSuiteLogger.addResult('---', '---', '---');
-        testSuiteHelpers.repeator(testSuiteCustomElements.runTestHTMLButtonElementInheritance, repeatFromZeroTo, stepFactor);
-        testSuiteLogger.addResult('---', '---', '---');
-        testSuiteHelpers.repeator(testSuiteCustomElements.runTestHTMLAudioElementInheritance, repeatFromZeroTo, stepFactor);
-        testSuiteLogger.addResult('---', '---', '---');
-
-        testSuiteHelpers.repeator(testSuiteShadowRoot.runTestWithoutAnyShadowContent, repeatFromZeroTo, stepFactor);
-        testSuiteLogger.addResult('---', '---', '---');
-        testSuiteHelpers.repeator(testSuiteShadowRoot.runTestWithShadowContent, repeatFromZeroTo, stepFactor);
-        testSuiteLogger.addResult('---', '---', '---');
-        testSuiteHelpers.repeator(testSuiteShadowRoot.runTestWithShadowContentAndShadowInsertions, repeatFromZeroTo, stepFactor);
-        testSuiteLogger.addResult('---', '---', '---');
-
-        testSuiteHelpers.repeator(testSuiteShadowRootComplex.runTestNestedShadowRoots, repeatFromZeroTo, stepFactor);
-        testSuiteLogger.addResult('---', '---', '---');
+        if (document.querySelector('#ce1').checked) {
+            testSuiteHelpers.repeator(testSuiteCustomElements.runTestHTMLElementInheritance, repeatFromZeroTo, stepFactor, repetitionCount);
+            testSuiteLogger.addResult('---', '---', '---');
+        }
+        
+        if (document.querySelector('#ce2').checked) {
+            testSuiteHelpers.repeator(testSuiteCustomElements.runTestWithoutInteritance, repeatFromZeroTo, stepFactor, repetitionCount);
+            testSuiteLogger.addResult('---', '---', '---');
+        }
+        
+        if (document.querySelector('#ce3').checked) {
+            testSuiteHelpers.repeator(testSuiteCustomElements.runTestHTMLButtonElementInheritance, repeatFromZeroTo, stepFactor, repetitionCount);
+            testSuiteLogger.addResult('---', '---', '---');
+        }
+        
+        if (document.querySelector('#ce4').checked) {
+            testSuiteHelpers.repeator(testSuiteCustomElements.runTestHTMLAudioElementInheritance, repeatFromZeroTo, stepFactor, repetitionCount);
+            testSuiteLogger.addResult('---', '---', '---');
+        }
+        
+        if (document.querySelector('#sr1').checked) {
+            testSuiteHelpers.repeator(testSuiteShadowRoot.runTestWithoutAnyShadowContent, repeatFromZeroTo, stepFactor, repetitionCount);
+            testSuiteLogger.addResult('---', '---', '---');
+        }
+        
+        if (document.querySelector('#sr2').checked) {
+            testSuiteHelpers.repeator(testSuiteShadowRoot.runTestWithShadowContent, repeatFromZeroTo, stepFactor, repetitionCount);
+            testSuiteLogger.addResult('---', '---', '---');
+        }
+        
+        if (document.querySelector('#sr3').checked) {
+            testSuiteHelpers.repeator(testSuiteShadowRoot.runTestWithShadowContentAndShadowInsertions, repeatFromZeroTo, stepFactor, repetitionCount);
+            testSuiteLogger.addResult('---', '---', '---');
+        }
+        
+        if (document.querySelector('#src1').checked) {
+            testSuiteHelpers.repeator(testSuiteShadowRootComplex.runTestNestedShadowRoots, repeatFromZeroTo, stepFactor, repetitionCount);
+            testSuiteLogger.addResult('---', '---', '---');
+        }
         
         statusText.innerHTML = 'Test is done.';
     }

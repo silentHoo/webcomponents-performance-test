@@ -14,10 +14,10 @@ var testSuiteHelpers = (function () {
             return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
         },
 
-        repeator: function (functionName, repeatFromZeroTo, stepFactor) {
+        repeator: function (functionName, repeatFromZeroTo, stepFactor, repetitionCount) {
             var current = 1;
             while (current <= repeatFromZeroTo) {
-                for (var i = 0; i < 10; i++) {
+                for (var i = 0; i < repetitionCount; i++) {
                     functionName(current);
                 }
                 current *= stepFactor;

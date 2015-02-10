@@ -211,8 +211,8 @@
         var rc = +document.querySelector('#repetitionCount').value;
         var sf = +document.querySelector('#stepFactor').value;
         
-        if (rc <= 0 || sf <= 0 || zt <= 0) {
-            statusText.innerHTML = 'Please enter a number greater than zero for both values.';
+        if (rc <= 1 || sf <= 0 || zt <= 0) {
+            statusText.innerHTML = 'Please enter a number greater than zero. Repetition count must be > 1';
             return;
         }
         

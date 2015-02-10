@@ -17,7 +17,7 @@ var testSuiteLogger = (function () {
         for (var i = 0; i < stashed.length; i++) {
             dTime += stashed[i];
         }
-    
+        
         addResultLine(testSuite, testNumber, title, dTime / stashed.length);
     };
     
@@ -26,7 +26,7 @@ var testSuiteLogger = (function () {
         var clone = document.importNode(template.content, true);
         var table = document.querySelector('#result-table');
         
-        var dur = (testSuite == '---') ? '---' : getDuration() + 'ms';
+        var dur = (testSuite == '---') ? '---' : testSuiteHelpers.round(duration, 2) + 'ms';
 
         var row = document.createElement('tr');
         row.innerHTML = '<td>' + testSuite + '</td>' +
@@ -53,9 +53,12 @@ var testSuiteLogger = (function () {
                 currentTestSuite = testSuite;
                 currentTestNumber = testNumber;
                 currentTitle = title;
+                
+                stashTime();
+                return;
             }
             
-            // is this another test suite?
+            // is this another test suite as before?
             if (currentTestSuite != testSuite || currentTestNumber != testNumber || currentTitle != title) {
                 // flush old one
                 this.flush();
@@ -67,10 +70,11 @@ var testSuiteLogger = (function () {
                 currentTestSuite = testSuite;
                 currentTestNumber = testNumber;
                 currentTitle = title;
-            } else {
-                // stash only
-                stashTime();
+                return;
             }
+            
+            // stash only
+            stashTime();
         },
         
         flush: function() {

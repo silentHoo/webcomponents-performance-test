@@ -232,9 +232,10 @@
                 var testCaseNo = cbs[i].getAttribute('data-testcase');
                 var testFunc = testSuites[testSuiteNo].getTestFunctions()[testCaseNo];
                 testSuiteHelpers.repeator(testFunc, repeatFromZeroTo, stepFactor, repetitionCount);
-                testSuiteLogger.addResult('---', '---', '---');
+                testSuiteLogger.addSeparator();
             }
         }
+        testSuiteLogger.flush();
         
         statusText.innerHTML = 'Test is done.';
     }

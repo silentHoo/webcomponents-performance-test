@@ -7,7 +7,6 @@ var testSuiteLogger = (function () {
     
     var stashed = [];
     var currentTestSuite, currentTestNumber, currentTitle;
-    var lastTestSuite, lastTestNumber, lastTitle;
     
     var stashTime = function() {
         stashed.push(getDuration());
@@ -42,14 +41,13 @@ var testSuiteLogger = (function () {
         initStartTime: function () {
             start = (new Date()).getTime();
         },
+        
+        addSeparator: function() {
+            this.flush();
+            addResultLine('---', '---', '---', -1);
+        },
 
         addResult: function (testSuite, testNumber, title) {
-            if (testSuite == '---') {
-                this.flush();
-                addResultLine('---', '---', '---', -1);
-                return;
-            }
-            
             // first run only
             if (currentTestSuite === undefined) {
                 currentTestSuite = testSuite;
@@ -59,21 +57,16 @@ var testSuiteLogger = (function () {
             
             // is this another test suite?
             if (currentTestSuite != testSuite || currentTestNumber != testNumber || currentTitle != title) {
-                if (stashed.length > 0) {
-                    // flush last results to output
-                    this.flush();
-                } else {
-                    // add new testsuite and stash
-                    lastTestSuite = currentTestSuite;
-                    lastTestNumber = currentTestNumber;
-                    lastTitle = currentTitle;
-                    
-                    currentTestSuite = testSuite;
-                    currentTestNumber = testNumber;
-                    currentTitle = title;
-                    
-                    stashTime();
-                }
+                // flush old one
+                this.flush();
+                
+                // stash new time
+                stashTime();
+                
+                // set new suite to current
+                currentTestSuite = testSuite;
+                currentTestNumber = testNumber;
+                currentTitle = title;
             } else {
                 // stash only
                 stashTime();

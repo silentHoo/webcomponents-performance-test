@@ -16,10 +16,10 @@ var testSuiteNoComponents = (function () {
         while (count > 0) {
             var div = document.createElement('div');
             startNode.appendChild(div);
-
-            startNode = startNode.querySelector('div');
+            startNode = div;
 
             --count;
+            
         }
     };
 
